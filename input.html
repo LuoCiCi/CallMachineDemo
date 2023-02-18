@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<meta charset=UTF-8">
+<title> 輸入頁面 </title>
+<style>
+
+ body {
+	overflow-x:hidden;
+	overflow-y:hidden;
+ }
+ ::-webkit-scrollbar {
+	display: none;
+ }
+ .my-custom-scrollbar {
+    position: relative;
+    height: 800px;
+    overflow: auto;
+ }
+ .my-custom-scrollbar thead th { 
+	position: sticky; 
+	top: 0; 
+	z-index: 1; 
+ }
+ th {
+	font-size: large;
+	background: #eee;
+ }
+</style>
+<script type="text/javascript">
+var gNo = 0;	// 序號
+var isShow = false;	// form是否顯示
+var dataExist = false;	// 資料表是否存在此筆資料
+$(function() {
+	document.getElementById('form').style.display='none';
+	// 清空form
+	clearForm();
+	// TEST
+	//getInfo();
+});
+
+function visibleForm() {
+	if(!isShow) {	// 隱藏改顯示
+		isShow = true;
+		$("#form").show(500);
+	}
+	else {	// 顯示改隱藏
+		isShow = false;
+		$("#form").hide(500);
+	}			
+}
+
+// 清除form資料
+function clearForm() {
+	$("#no").val("");
+	if ($("input[name='place']:checked").length > 0) {
+		$("input[name='place']:checked")[0].checked = false;
+	}
+	if ($("input[name='status']:checked").length > 0) {
+		$("input[name='status']:checked")[0].checked = false;
+	}
+}
+
+// 取得輸入資料
+function getInfo() {
+	var no = $("#no").val();	// 單號
+	var place;	// 用餐場所
+	var status;	// 等候狀態
+	
+	if ($("input[name='place']:checked").length > 0) {
+		place = $("input[name='place']:checked")[0].id;
+	}
+	
+	if ($("input[name='status']:checked").length > 0) {
+		status = $("input[name='status']:checked")[0].id
+	}
+	
+	dataExist = false;
+	// 檢查資料表是否已存在此單號資料
+	checkData(no);
+	if (!dataExist) {
+		// 此單號未存在
+		addToDatatable(no, place, status);
+		
+		// TEST
+//		var i=0;
+//		for(i =0;i<15;i++){
+//			no =i+1;
+//			place = "一樓內用";
+//			status = "請等待";
+//			addToDatatable(no, place, status);
+//		}
+		
+	}
+}
+
+// 塞入資料表
+function addToDatatable(no, place, status) {
+	var tbody = $("#dt1 > table > tbody");
+	var tr = $("<tr>");
+	var td = $("<td>");
+	var btnUpd;
+	var btnDel;
+	
+	gNo += 1;	// 序號
+	
+	tr = $("<tr>");
+	
+	// 序號
+	td = $("<td>");
+	td.attr("id", "gNo");
+	td.text(gNo);
+	tr.append(td);
+	$("#dt1 > table > tbody").append(tr);
+	
+	// 單號
+	td = $("<td>");
+	td.attr("id", "no");
+	td.text(no);
+	tr.append(td);
+	$("#dt1 > table > tbody").append(tr);
+	
+	// 用餐場所
+	td = $("<td>");
+	td.attr("id", "place");
+	td.text(place);
+	tr.append(td);
+	tbody.append(tr);
+	
+	// 等候狀態
+	td = $("<td>");
+	td.attr("id", "status");
+	td.text(status);
+	tr.append(td);
+	tbody.append(tr);
+	
+	// 操作
+	td = $("<td>");
+	btnUpd = $("<button type='button' class='btn' id='btnUpd' onclick='btnUpd(this)'></button>");
+	btnDel = $("<button type='button' class='btn' id='btnDel' onclick='btnDel(this)'></button>");
+	btnUpd.text("修改");
+	btnDel.text("刪除");
+	td.append(btnUpd);
+	td.append(btnDel);
+	tr.append(td);
+	tbody.append(tr);
+	
+	// 清除form資料
+	clearForm();
+}
+
+// form單筆資料刪除
+function btnDel(e) {
+	e.parentElement.parentElement.remove();
+}
+
+// form單筆資料修改
+function btnUpd(e) {
+	// 判斷Form未顯示，則先顯示Form
+	if (isShow == false) {
+		visibleForm();
+	}
+	
+	$("div > #form").find("input#no").val($(e).closest('tr').find("td#no").text());
+	
+	var tdPlace = $(e).closest('tr').find("td#place").text();	// 用餐場所
+	$("div > #form").find("input#" + tdPlace).prop("checked",true);
+	
+	var tdStatus = $(e).closest('tr').find("td#status").text();	// 等候狀態
+	$("div > #form").find("input#" + tdStatus).prop("checked",true);
+}
+
+// 檢查資料表是否已存在此單號資料
+function checkData(nowNo) {
+	$("#dt1 tr").find("td#no").each(function(e){
+		if (nowNo == $(this).text()) {
+			dataExist = true;
+			// 此單號已存在
+			updateOne($(this).text(), e);
+			return false;
+		}
+	});
+}
+
+// 更新資料表中單筆資料
+function updateOne(no, row) {
+	row += 1;
+	var place;
+	var status;
+	var color = false;
+	
+	
+	if ($("input[name='place']:checked").length > 0) {
+		place = $("input[name='place']:checked")[0].id;
+	}
+	
+	if ($("input[name='status']:checked").length > 0) {
+		status = $("input[name='status']:checked")[0].id
+	}
+	
+	if ($("#dt1").find("tr:eq(" + row + ")").find("td#place").text() != place) {
+		$("#dt1").find("tr:eq(" + row + ")").find("td#place").text(place);
+		color = true;
+	}
+	if ($("#dt1").find("tr:eq(" + row + ")").find("td#status").text() != status) {
+		$("#dt1").find("tr:eq(" + row + ")").find("td#status").text(status);
+		color = true;
+	}
+
+	//if (color == true) {
+		//$("#dt1").find("tr:eq(" + row + ")").attr("style","color: red; background-color:#FFFF00");
+	//}
+	// 清除form資料
+	clearForm();
+}
+
+
+</script>
+</head>
+<body>
+<div>
+	<button type="button" class="btn btn-primary" onclick="visibleForm()" style="margin:10px 10px 3px 10px">
+		<span class="ui-btn ui-icon-plus ui-btn-icon-left ui-shadow ui-corner-all">新增單號</span>
+	</button>
+	<div style="border-width:1px;border-style:solid;padding:5px 10px;margin:5px 10px" id="form">
+		<div class="row">
+		<div class="col-sm-12">
+			<div class="col-sm-4">
+				<font size="2"><b>單號</b></font><br />
+				<input id="no" />
+			</div>
+
+			<div class="col-sm-4">
+				<font size="2"><b>用餐場所</b></font><br />
+				<label><input type="radio" id="一樓內用" name="place">一樓內用</label>
+				<label><input type="radio" id="二樓內用" name="place">二樓內用</label>
+				<label><input type="radio" id="外帶" name="place">外帶</label>
+				<label><input type="radio" id="外送" name="place">外送</label>
+			</div>
+
+			<div class="col-sm-4">
+				<font size="2"><b>等候狀態</b></font><br />
+				<label><input type="radio" id="請等待" name="status">請等待</label>
+				<label><input type="radio" id="請進入" name="status">請進入</label>
+				<label><input type="radio" id="請取餐" name="status">請取餐</label>
+				<br />
+				<button type="button" class="btn btn-warning" onclick="clearForm()" style="width:80px">
+					<span class="ui-btn ui-icon-plus ui-btn-icon-left ui-shadow ui-corner-all">取消</span>
+				</button>
+				<button type="button" class="btn btn-info" onclick="getInfo()" style="width:80px">
+					<span class="ui-btn ui-icon-plus ui-btn-icon-left ui-shadow ui-corner-all">確認</span>
+				</button>
+			</div>
+		</div>
+		</div>
+
+	</div>
+	
+	<div class="container my-custom-scrollbar" id="dt1" style="width:100%;">
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>序號</th>
+					<th>單號</th>
+					<th>用餐場所</th>
+					<th>等候狀態</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+</div>
+
+</div>
+</body>
+</html>
+
+
+
