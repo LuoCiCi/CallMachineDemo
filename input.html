@@ -113,6 +113,7 @@ function addToDatatable(no, place, status) {
 	gNo += 1;	// 序號
 	
 	tr = $("<tr>");
+	tr.attr("data-no",gNo);
 	
 	// 序號
 	td = $("<td>");
@@ -168,7 +169,7 @@ function addToJson(no, place, status) {
 	};
 	
 	// 儲存至本地端
-    localStorage.setItem("data_"+localStorageNo, JSON.stringify(data));
+    localStorage.setItem(gNo, JSON.stringify(data));
 }
 
 // form單筆資料刪除
@@ -176,7 +177,7 @@ function btnDel(e) {
 	e.parentElement.parentElement.remove();
 	
 	// localStorage單筆刪除
-	
+	localStorage.removeItem(e.parentElement.parentElement.getAttribute("data-no"));
 }
 
 // form單筆資料修改
@@ -186,13 +187,16 @@ function btnUpd(e) {
 		visibleForm();
 	}
 	
+	var tdPlace = $(e).closest('tr').find("td#place").text();	// 用餐場所
+	var tdStatus = $(e).closest('tr').find("td#status").text();	// 等候狀態
+	
+	
 	$("div > #form").find("input#no").val($(e).closest('tr').find("td#no").text());
 	
-	var tdPlace = $(e).closest('tr').find("td#place").text();	// 用餐場所
 	$("div > #form").find("input#" + tdPlace).prop("checked",true);
 	
-	var tdStatus = $(e).closest('tr').find("td#status").text();	// 等候狀態
 	$("div > #form").find("input#" + tdStatus).prop("checked",true);
+	
 }
 
 // 檢查資料表是否已存在此單號資料
@@ -231,6 +235,14 @@ function updateOne(no, row) {
 		$("#dt1").find("tr:eq(" + row + ")").find("td#status").text(status);
 		color = true;
 	}
+
+	var data = {
+		"no": no,
+		"place": place,
+		"status": status
+	};
+	localStorage.setItem($("#dt1").find("tr:eq(" + row + ")")[0].getAttribute("data-no"), JSON.stringify(data));
+
 
 	//if (color == true) {
 		//$("#dt1").find("tr:eq(" + row + ")").attr("style","color: red; background-color:#FFFF00");
