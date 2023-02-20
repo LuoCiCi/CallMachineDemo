@@ -4,7 +4,7 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
 
     // 讀取 POST 資料，並解析為 JSON 格式
-    $url = 'https://luocici.github.io/CallMachineDemo/data.json';
+    $url = 'https://cors-anywhere.herokuapp.com/https://luocici.github.io/CallMachineDemo/data.json';
     $json = file_get_contents($url);
     $data = json_decode($json, true);
 
