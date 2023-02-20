@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -33,12 +33,16 @@
 </style>
 <script type="text/javascript">
 var gNo = 0;	// 序號
+var localStorageNo = 0; //localStorage序號
 var isShow = false;	// form是否顯示
 var dataExist = false;	// 資料表是否存在此筆資料
+
 $(function() {
 	document.getElementById('form').style.display='none';
 	// 清空form
 	clearForm();
+	// 清除localStorage
+	localStorage.clear();
 	// TEST
 	//getInfo();
 });
@@ -85,6 +89,7 @@ function getInfo() {
 	if (!dataExist) {
 		// 此單號未存在
 		addToDatatable(no, place, status);
+		addToJson(no, place, status);
 		
 		// TEST
 //		var i=0;
@@ -94,7 +99,6 @@ function getInfo() {
 //			status = "請等待";
 //			addToDatatable(no, place, status);
 //		}
-		
 	}
 }
 
@@ -153,9 +157,26 @@ function addToDatatable(no, place, status) {
 	clearForm();
 }
 
+// 塞入json
+function addToJson(no, place, status) {
+	localStorageNo += 1;	// localStorage序號
+	// 取得輸入的資料
+	var data = {
+		"no": no,
+		"place": place,
+		"status": status
+	};
+	
+	// 儲存至本地端
+    localStorage.setItem("data_"+localStorageNo, JSON.stringify(data));
+}
+
 // form單筆資料刪除
 function btnDel(e) {
 	e.parentElement.parentElement.remove();
+	
+	// localStorage單筆刪除
+	
 }
 
 // form單筆資料修改
@@ -275,7 +296,7 @@ function updateOne(no, row) {
 			<tbody>
 			</tbody>
 		</table>
-</div>
+	</div>
 
 </div>
 </body>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<meta charset=UTF-8">
+<title> 輸出頁面 </title>
+<style>
+      body {
+		background-color: black;
+	  }
+	  table {
+        border-collapse: collapse;
+		color: white;
+		margin: 0 2px;
+      }
+
+      /* 設定table中的內容居中對齊 */
+      td {
+        text-align: center;
+        vertical-align: middle;
+        border-bottom: 1px solid black;
+        padding: 10px;
+		background: #045D5D;
+		border-bottom: 3px solid white;
+      }
+
+      /* 設定包含四個table的div元素垂直置中 */
+      #container {
+        display: flex;
+        align-items: center;
+        height: 80%;
+		margin: 0 30%;
+      }
+</style>
+<script type="text/javascript">
+$(function() {
+
+	//$("#text").html(outputOne());
+	test();
+	 //setInterval(function () {alert("Hello")}, 5000);
+})
+
+function test() {
+	
+	var storedData = localStorage.length;
+	if (storedData > 0) {
+//	  var data = JSON.parse(storedData);
+//	  console.log(data.no);
+//	  console.log(data.place);
+//	  console.log(data.status);
+//	  
+	  
+	  for(var data in localStorage){
+		alert(data);
+	  }
+		$.each(localStorage,function(e){
+			if (e.indexOf('data_') > -1) { 
+				//alert(localStorage.getItem(e));
+				var data = JSON.parse(localStorage.getItem(e));
+				alert("單號：" + data.no + "，用餐場所：" + data.place + "，等候狀態：" + data.status);
+			}
+		});
+	} else {
+	  console.log("No data found.");
+	}
+	
+	//var src = "https://luocici.github.io/CallMachineDemo/data.json";
+	
+	
+//	$.get(src, function(data) {
+//		alert("Data Loaded: " + data); // 執行會跳出 Data       Loaded: hello word 的視窗
+//	});
+	//$("#text").load('https://luocici.github.io/CallMachineDemo/input.html');
+
+//	$.ajax({
+//        //url: 'https://raw.githubusercontent.com/wsmwason/taiwan-bank-code/master/data/taiwanBankCodeATM.json',
+//		url: src,
+//		dataType: 'html',
+//        success: function (data) {
+//			//console.log(info);
+//			//console.log("====================");
+//			//console.log(info[0]);
+//			//console.log(info[1]);
+//			//console.log(info[2]);
+//			var dt = $(data).find("#dt1 > tbody");
+//			
+//			
+//			$("#text").text(dt);
+//			//$("#text").text(JSON.stringify(info));
+//        },
+//        error: function (data) {
+//            console.log("請求失敗");
+//        }
+//    });
+//	
+	
+//	$.ajax({
+//	  url: src,
+//	  dataType: 'json',
+//	  success: function(data) {
+//		let html = '';
+//		$.each(data, function(index, item) {
+//		  html += `<p>單號：${item.no}</p><p>用餐場所：${item.place}</p><p>等候狀態：${item.status}</p>`;
+//		});
+//		$('#text').html(html);
+//	  },
+//	  error: function(jqXHR, textStatus, errorThrown) {
+//		console.log('讀取JSON檔案失敗', textStatus, errorThrown);
+//	  }
+//	});
+//
+
+}
+
+
+function outputOne() {
+	var sResult;
+	var url = window.location.search;
+	if (url.indexOf("?") != -1) {
+		sResult = url.substr(url.indexOf("=") + 1);
+	}
+	return sResult;
+}
+
+function outputMany() {
+	var url = window.location.search;
+	if (url.indexOf("?") != -1) {
+		var sVal = url.substr(1);
+		
+		
+	
+	}
+}
+
+</script>
+</head>
+<body>
+	<div id="container">
+	
+      <table>
+        <tr>
+          <td>一樓內用</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>二樓內用</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>外帶</td>
+        </tr>
+      </table>
+      <table>
+        <tr>
+          <td>外送</td>
+        </tr>
+      </table>
+    </div>
+
+</body>
+</html>
