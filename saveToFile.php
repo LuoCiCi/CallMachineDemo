@@ -1,4 +1,8 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: *");
+    header("Access-Control-Allow-Headers: Origin, Methods, Content-Type, Authorization");
+
     // 讀取 POST 資料，並解析為 JSON 格式
 $data = json_decode(file_get_contents('php://input'), true);
 
