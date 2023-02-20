@@ -1,6 +1,6 @@
 <?php
     $data = $_POST['text'];
-    $file = fopen('data.txt', 'w');
+    $file = fopen('https://luocici.github.io/CallMachineDemo/data.json', 'w');
     fwrite($file, $data);
     fclose($file);
 ?>
