@@ -1,9 +1,7 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-
-header('Access-Control-Allow-Methods: *');
-
-header('Access-Control-Allow-Headers: Origin, Methods, Content-Type, Authorization');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
 
     // 讀取 POST 資料，並解析為 JSON 格式
     $url = 'https://luocici.github.io/CallMachineDemo/data.json';
