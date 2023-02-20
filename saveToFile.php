@@ -10,4 +10,8 @@
     $file = fopen('data.json', 'w');
     fwrite($file, $file_contents);
     fclose($file);
+
+    $response = array('status' => 'success', 'message' => '資料已經成功儲存！');
+
+    echo json_encode($response);
 ?>
