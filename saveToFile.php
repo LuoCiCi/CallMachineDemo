@@ -1,17 +1,16 @@
 <?php
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Methods: *");
-    header("Access-Control-Allow-Headers: Origin, Methods, Content-Type, Authorization");
-    header("Content-Type:application/json; charset=utf-8");
+    // 讀取 POST 資料，並解析為 JSON 格式
+$data = json_decode(file_get_contents('php://input'), true);
 
-    $data = $_POST['text'];
-    $url = 'https://luocici.github.io/CallMachineDemo/data.json';
-    $file_contents = file_get_contents($url);
-    $file = fopen('data.json', 'w');
-    fwrite($file, $file_contents);
-    fclose($file);
+// 要寫入的 JSON 資料
+$json_data = json_encode($data);
 
-    $response = array('status' => 'success', 'message' => '資料已經成功儲存！');
+// 開啟檔案，並寫入資料
+$file = fopen('data.json', 'w');
+fwrite($file, $json_data);
+fclose($file);
 
-    echo json_encode($response);
+// 回應 JSON 格式的資料
+header('Content-Type: application/json');
+echo json_encode(array('success' => true));
 ?>
