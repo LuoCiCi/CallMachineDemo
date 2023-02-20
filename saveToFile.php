@@ -9,6 +9,5 @@ header("Content-Type:application/json; charset=utf-8");
     fwrite($file, json_decode($data));
     fclose($file);
 
-//     ob_clean();
-//     echo json_encode(array('OK --- text' => $_POST['text']));
+
 ?>
