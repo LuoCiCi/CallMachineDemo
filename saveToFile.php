@@ -4,7 +4,7 @@
     header("Access-Control-Allow-Headers: Origin, Methods, Content-Type, Authorization");
 
     // 讀取 POST 資料，並解析為 JSON 格式
-$data = json_decode(file_get_contents('php://input'), true);
+$data = json_decode(file_get_contents('https://luocici.github.io/CallMachineDemo/data.json'), true);
 
 // 要寫入的 JSON 資料
 $json_data = json_encode($data);
