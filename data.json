@@ -1,12 +1,22 @@
 [
   {
     "no":"1",
-    "place":"aa",
-    "status":"bba"
+    "place":"一樓內用",
+    "status":"請等待"
+  },
+  {
+    "no":"2",
+    "place":"二樓內用",
+    "status":"請進入"
+  },
+  {
+    "no":"3",
+    "place":"一樓內用",
+    "status":"請等待"
   },
   {
     "no":"4",
-    "place":"wr",
-    "status":"rt"
+    "place":"外送",
+    "status":"請等待"
   }
 ]
