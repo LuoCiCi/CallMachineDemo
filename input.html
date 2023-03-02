@@ -46,6 +46,39 @@ $(function() {
 	// TEST
 	//getInfo();
 });
+			      
+$(document).ready(function() {
+	$('.radio_place').click(function() {
+		switch ($(this)[0].id) {
+			case "一樓內用":
+				$('.radio_status')[2].checked=false;	// 請取餐取消點選
+				$('.radio_status')[0].disabled = false;	// 請稍等可以點
+				$('.radio_status')[1].disabled = false;	// 請進入可以點
+				$('.radio_status')[2].disabled = true;	// 請取餐不能點
+				break;
+			case "二樓內用":
+				$('.radio_status')[2].checked=false;	// 請取餐取消點選
+				$('.radio_status')[0].disabled = false;	// 請稍等可以點
+				$('.radio_status')[1].disabled = false;	// 請進入可以點
+				$('.radio_status')[2].disabled = true;	// 請取餐不能點
+				break;
+			case "外帶":
+				$('.radio_status')[1].checked=false;	// 請進入取消點選
+				$('.radio_status')[0].disabled = false;	// 請稍等可以點
+				$('.radio_status')[1].disabled = true;	// 請進入不能點
+				$('.radio_status')[2].disabled = false;	// 請取餐可以點
+				break;
+			case "外送":
+				$('.radio_status')[1].checked=false;	// 請進入取消點選
+				$('.radio_status')[0].disabled = false;	// 請稍等可以點
+				$('.radio_status')[1].disabled = true;	// 請進入不能點
+				$('.radio_status')[2].disabled = false;	// 請取餐可以點
+				break;
+			default:
+				break;
+		}
+	});
+});
 
 function visibleForm() {
 	if(!isShow) {	// 隱藏改顯示
@@ -279,17 +312,17 @@ function updateOne(no, row) {
 
 			<div class="col-sm-4">
 				<font size="2"><b>用餐場所</b></font><br />
-				<label><input type="radio" id="一樓內用" name="place">一樓內用</label>
-				<label><input type="radio" id="二樓內用" name="place">二樓內用</label>
-				<label><input type="radio" id="外帶" name="place">外帶</label>
-				<label><input type="radio" id="外送" name="place">外送</label>
+				<label><input class="radio_place" type="radio" id="一樓內用" name="place">一樓內用</label>
+				<label><input class="radio_place" type="radio" id="二樓內用" name="place">二樓內用</label>
+				<label><input class="radio_place" type="radio" id="外帶" name="place">外帶</label>
+				<label><input class="radio_place" type="radio" id="外送" name="place">外送</label>
 			</div>
 
 			<div class="col-sm-4">
 				<font size="2"><b>等候狀態</b></font><br />
-				<label><input type="radio" id="請等待" name="status">請等待</label>
-				<label><input type="radio" id="請進入" name="status">請進入</label>
-				<label><input type="radio" id="請取餐" name="status">請取餐</label>
+				<label><input class="radio_status" type="radio" id="請等待" name="status">請等待</label>
+				<label><input class="radio_status" type="radio" id="請進入" name="status">請進入</label>
+				<label><input class="radio_status" type="radio" id="請取餐" name="status">請取餐</label>
 				<br />
 				<button type="button" class="btn btn-warning" onclick="clearForm()" style="width:80px">
 					<span class="ui-btn ui-icon-plus ui-btn-icon-left ui-shadow ui-corner-all">取消</span>
