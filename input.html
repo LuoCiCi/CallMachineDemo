@@ -40,7 +40,7 @@ var dataExist = false;	// 資料表是否存在此筆資料
 $(function() {
 	document.getElementById('form').style.display='none';
 	// 清空form
-	clearForm();
+	//clearForm();
 	// 清除localStorage
 	localStorage.clear();
 	// TEST
@@ -75,12 +75,22 @@ function getInfo() {
 	var place;	// 用餐場所
 	var status;	// 等候狀態
 	
+	if (no == "") {
+		alert("請輸入單號");
+		return;
+	}
 	if ($("input[name='place']:checked").length > 0) {
 		place = $("input[name='place']:checked")[0].id;
+	} else {
+		alert("請選擇用餐場所");
+		return;
 	}
 	
 	if ($("input[name='status']:checked").length > 0) {
 		status = $("input[name='status']:checked")[0].id
+	} else {
+		alert("請選擇等候狀態");
+		return;
 	}
 	
 	dataExist = false;
